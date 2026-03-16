@@ -1,21 +1,69 @@
+const express = require("express");
+const productController = require("../controllers/product.controller");
+const router = express.Router();
+const { body } = require("express-validator");
 
-// Get all Products
-app.get("/api/inventory", );
+router
+  .route("/")
+  .get(productController.getAllProducts)
+  .post(
+    [
+      body("name")
+        .trim()
+        .notEmpty()
+        .withMessage("Product name is required")
+        .isString()
+        .withMessage("Name must be a string"),
 
-// get Product By ID
-app.get("/api/inventory/searchbyid/:productID", );
+      body("description")
+        .trim()
+        .notEmpty()
+        .withMessage("Description is required"),
 
-// get Product By Name
-app.get("/api/inventory/searchbyname/:productName", );
+      body("price")
+        .notEmpty()
+        .withMessage("Price is required")
+        .isNumeric()
+        .withMessage("Price must be a number")
+        .custom((value) => value >= 0)
+        .withMessage("Price cannot be negative"),
 
-// Post Product
-app.post(
-  "/api/inventory",
-  [
-    body("name").notEmpty().withMessage("Name Must not be empty"),
-    body("category").notEmpty().withMessage("Category Must not be empty"),
-    body("price").isNumeric().withMessage("Price Must be a number"),
-    body("stock").isNumeric().withMessage("Stock Must be a number"),
-    body("supplierId").isNumeric().withMessage("Supplier ID Must be a number"),
-  ],
-);
+      body("stock")
+        .notEmpty()
+        .withMessage("Stock quantity is required")
+        .isInt({ min: 0 })
+        .withMessage("Stock must be a positive integer"),
+
+      body("category").trim().notEmpty().withMessage("Category is required"),
+
+      body("supplierId")
+        .trim()
+        .notEmpty()
+        .withMessage("Supplier ID is required")
+        .isMongoId()
+        .withMessage("Invalid Supplier ID format"),
+    ],
+    productController.addProduct,
+  );
+
+router
+  .route("/:productId")
+  .get(productController.getProductById)
+  .patch(
+    [
+      body("price")
+        .optional()
+        .isNumeric()
+        .withMessage("Price must be a number"),
+      body("stock")
+        .optional()
+        .isInt({ min: 0 })
+        .withMessage("Stock must be positive"),
+    ],
+    productController.updateProduct,
+  )
+  .delete(productController.deleteProduct);
+
+router.get("/supplier/:supplierId", productController.getProductsBySupplier);
+
+module.exports = router;

@@ -24,12 +24,6 @@ const supplierSchema = new Schema(
       required: true,
       trim: true,
     },
-    suppliedProducts: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "Product",
-      },
-    ],
   },
   { timestamps: true },
 );
