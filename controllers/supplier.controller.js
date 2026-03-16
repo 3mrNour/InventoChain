@@ -1,5 +1,5 @@
 const Supplier = require("../models/suppplier.model");
-// const { mowared } = require("../data/data");
+
 const { validationResult } = require("express-validator");
 
 const getAllSuppliers = async (req, res) => {
