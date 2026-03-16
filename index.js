@@ -13,5 +13,5 @@ mongoose.connect(url).then(() => {
   console.log("Server Connected Sucsessfully");
 });
 app.listen(2000, () => {
-  console.log("Server is listening in Port : 5000");
+  console.log("Server is listening in Port : 2000");
 });
