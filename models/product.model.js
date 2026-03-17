@@ -41,7 +41,14 @@ const productSchema = new mongoose.Schema(
       type: String,
     },
   },
-  { timestamps: true },
+  {
+    statics: {
+      findByName(productName) {
+        return this.find({ name: new RegExp(productName, "i") });
+      },
+    },
+    timestamps: true,
+  },
 );
 
 module.exports = mongoose.model("Product", productSchema);
