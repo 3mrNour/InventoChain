@@ -38,7 +38,6 @@ const addProduct = async (req, res) => {
   try {
     const newProduct = new Product(req.body);
     await newProduct.save();
-
     res.status(201).json({
       status: HttpResponseText.SUCCESS,
       data: { product: newProduct },

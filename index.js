@@ -1,18 +1,23 @@
 const express = require("express");
 const app = express();
+const cors = require("cors");
 require("dotenv").config();
 
 const HttpResponseText = require("./utils/HttpResponseText");
 const supplierRouter = require("./routes/supplier.route");
 const productRouter = require("./routes/product.route");
+const orderRouter = require("./routes/order.route");
 app.use(express.json());
+app.use(cors());
 const mongoose = require("mongoose");
 const url = process.env.MONGO_URL;
 
 app.use("/api/suppliers", supplierRouter);
 app.use("/api/products", productRouter);
+app.use("/api/orders", orderRouter);
 
-app.all(/(.*)/, (req, res, next) => {
+//Global middleware for not found pages
+app.all(/(.*)/, (req, res) => {
   return res.status(404).json({
     status: HttpResponseText.FAIL,
     data: { message: "Not Found!" },
