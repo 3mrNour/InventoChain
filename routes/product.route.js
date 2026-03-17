@@ -28,7 +28,7 @@ router
         .custom((value) => value >= 0)
         .withMessage("Price cannot be negative"),
 
-      body("stock")
+      body("quantity")
         .notEmpty()
         .withMessage("Stock quantity is required")
         .isInt({ min: 0 })
@@ -55,7 +55,7 @@ router
         .optional()
         .isNumeric()
         .withMessage("Price must be a number"),
-      body("stock")
+      body("quantity")
         .optional()
         .isInt({ min: 0 })
         .withMessage("Stock must be positive"),
