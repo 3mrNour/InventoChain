@@ -9,7 +9,7 @@ const getAllProducts = async (req, res) => {
   const skip = (page - 1) * limit;
 
   try {
-    const allProducts = await Product.find()
+    const allProducts = await Product.find({}, { _v: false })
       .populate("supplierId", "name phone")
       .limit(limit)
       .skip(skip);
@@ -80,7 +80,7 @@ const updateProduct = async (req, res) => {
     const updatedProduct = await Product.findByIdAndUpdate(
       productId,
       { $set: { ...req.body } },
-      { new: true, runValidators: true },
+      { returnDocument: "after", runValidators: true },
     );
 
     if (!updatedProduct) {
@@ -92,12 +92,14 @@ const updateProduct = async (req, res) => {
 
     return res.status(200).json({
       status: HttpResponseText.SUCCESS,
-      data: { supplier: updatedSupplier },
+      data: { product: updatedProduct },
     });
   } catch (err) {
-    return res
-      .status(500)
-      .json({ status: HttpResponseText.ERROR, message: err, code: 500 });
+    return res.status(500).json({
+      status: HttpResponseText.ERROR,
+      message: err.message,
+      code: 500,
+    });
   }
 };
 
@@ -118,9 +120,11 @@ const deleteProduct = async (req, res) => {
       data: { product: deletedProduct },
     });
   } catch (err) {
-    return res
-      .status(500)
-      .json({ status: HttpResponseText.ERROR, message: err, code: 500 });
+    return res.status(500).json({
+      status: HttpResponseText.ERROR,
+      message: err.message,
+      code: 500,
+    });
   }
 };
 

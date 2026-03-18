@@ -2,7 +2,7 @@ const User = require("../models/user.model");
 const HttpResponseText = require("../utils/HttpResponseText");
 const getAllUsers = async (req, res) => {
   try {
-    const allUsers = await User.find({});
+    const allUsers = await User.find({}, { _v: false, password: false });
     res
       .status(200)
       .json({ status: HttpResponseText.SUCCESS, data: { users: allUsers } });

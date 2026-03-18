@@ -4,7 +4,7 @@ const { validationResult } = require("express-validator");
 
 const getAllSuppliers = async (req, res) => {
   try {
-    const allSuppliers = await Supplier.find();
+    const allSuppliers = await Supplier.find({},{ _v: false });
     res.status(200).json({
       status: HttpResponseText.SUCCESS,
       data: { suppliers: allSuppliers },
@@ -45,7 +45,7 @@ const addSupplier = async (req, res) => {
 
 const getSupplierById = async (req, res) => {
   try {
-    const supplier = await Supplier.findById(req.params.supplierId);
+    const supplier = await Supplier.findById(req.params.supplierId,{ _v: false });
     if (!supplier) {
       return res
         .status(404)

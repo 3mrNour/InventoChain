@@ -4,7 +4,7 @@ const HttpResponseText = require("../utils/HttpResponseText");
 
 const getOrders = async (req, res) => {
   try {
-    const allOrders = await Order.find();
+    const allOrders = await Order.find({},{ _v: false });
     res
       .status(200)
       .json({ status: HttpResponseText.SUCCESS, data: { orders: allOrders } });
@@ -17,7 +17,7 @@ const getOrders = async (req, res) => {
 
 const getOrderById = async (req, res) => {
   try {
-    const order = await Order.findById(req.params.orderId);
+    const order = await Order.findById(req.params.orderId,{ _v: false });
     if (!order) {
       return res.status(404).json({
         status: HttpResponseText.FAIL,

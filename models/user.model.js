@@ -19,17 +19,19 @@ const userSchema = new mongoose.Schema(
     password: {
       type: String,
       required: true,
-      minlength: 8,
+      minlength: [8],
+      validate: [validator.isStrongPassword, "Please enter a strong password"],
     },
     role: {
       type: String,
       enum: ["USER", "SUPPLIER", "ADMIN"],
       default: "USER",
     },
+    token: {
+      type: String,
+    },
   },
-  {
-    timestamps: true,
-  },
+  { timestamps: true },
 );
 // userSchema.statics.findByFullName = function (fullName) {
 //   return this.find({
