@@ -1,0 +1,6 @@
+const PENDING = "PENDING";
+const SHIPPED = "SHIPPED";
+const DELIVERED = "DELIVERED";
+const CANCELLED = "CANCELLED";
+
+module.exports = { PENDING, SHIPPED, DELIVERED, CANCELLED };

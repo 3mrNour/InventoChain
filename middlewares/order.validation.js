@@ -1,11 +1,6 @@
 const { body } = require("express-validator");
 
 const placeOrderValidation = [
-  body("userId")
-    .notEmpty()
-    .withMessage("User ID Must be Filled")
-    .isMongoId()
-    .withMessage("Invalid objectID"),
 
   body("items")
     .isArray()

@@ -9,6 +9,7 @@ const productRouter = require("./routes/product.route");
 const orderRouter = require("./routes/order.route");
 const userRouter = require("./routes/user.route");
 const authRouter = require("./routes/auth.route");
+const orderTrackingRouter = require("./routes/orderTracking.route");
 app.use(express.json());
 app.use(cors());
 const mongoose = require("mongoose");
@@ -19,6 +20,7 @@ app.use("/api/products", productRouter);
 app.use("/api/orders", orderRouter);
 app.use("/api/users", userRouter);
 app.use("/api/auth", authRouter);
+app.use("/api/orderTracker", orderTrackingRouter);
 
 //Global middleware for not found pages
 app.all(/(.*)/, (req, res) => {

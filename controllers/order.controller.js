@@ -1,8 +1,11 @@
-// const Product = require("../models/product.model");
 const Order = require("../models/order.model");
 const Product = require("../models/product.model");
 const HttpResponseText = require("../utils/HttpResponseText");
+const orderStatus = require("../utils/orderStatus");
+const OrderTracking = require("../models/tracking.model");
+const updateOrderStatus = require("../middlewares/orderTracking.validation");
 const { validationResult } = require("express-validator");
+const jwt = require("jsonwebtoken");
 
 const getOrders = async (req, res) => {
   try {
@@ -46,7 +49,13 @@ const PlaceOrder = async (req, res) => {
   }
 
   try {
-    const { userId, items } = req.body;
+    if (!req.headers.authorization) {
+      throw new Error("Token must be provided");
+    }
+    const token = req.headers.authorization.split(" ")[1];
+    const userId = jwt.verify(token, process.env.JWT_SECRET_KEY).id;
+
+    const { items } = req.body;
     let totalPriceCalculator = 0;
     for (const item of items) {
       let productExist = await Product.findById(item.productId);
@@ -76,6 +85,20 @@ const PlaceOrder = async (req, res) => {
       totalPrice: totalPriceCalculator,
     });
     await newOrder.save();
+
+    const newTracking = new OrderTracking({
+      orderId: newOrder._id,
+      status: orderStatus.PENDING,
+      statusHistory: [
+        {
+          status: orderStatus.PENDING,
+          message:
+            "Order has been created successfully and is awaiting processing.",
+          timestamp: new Date(),
+        },
+      ],
+    });
+    await newTracking.save();
     res
       .status(201)
       .json({ status: HttpResponseText.SUCCESS, data: { order: newOrder } });
@@ -86,6 +109,7 @@ const PlaceOrder = async (req, res) => {
     });
   }
 };
+
 module.exports = { getOrders, getOrderById, PlaceOrder };
 
 //اللي فاضل في المشروع (Place Order and API , Inventory Updates & shipment tracking , تقفيل الراوتس مع الرولز)
