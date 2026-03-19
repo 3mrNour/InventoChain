@@ -86,6 +86,14 @@ const PlaceOrder = async (req, res) => {
     });
     await newOrder.save();
 
+    const bulkOps = items.map((item) => ({
+      updateOne: {
+        filter: { _id: item.productId },
+        update: { $inc: { quantity: -item.quantity } },
+      },
+    }));
+
+    await Product.bulkWrite(bulkOps);
     const newTracking = new OrderTracking({
       order: newOrder._id,
       status: orderStatus.PENDING,
@@ -112,4 +120,3 @@ const PlaceOrder = async (req, res) => {
 
 module.exports = { getOrders, getOrderById, PlaceOrder };
 
-//اللي فاضل في المشروع (Place Order and API , Inventory Updates & shipment tracking , تقفيل الراوتس مع الرولز)

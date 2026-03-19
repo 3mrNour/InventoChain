@@ -8,12 +8,30 @@ const router = express.Router();
 
 router
   .route("/")
-  .get(supplierController.getAllSuppliers)
-  .post(addSupplierValidation, supplierController.addSupplier);
+  .get(
+    verifyToken,
+    allowedTo(userRoles.ADMIN, userRoles.USER),
+    supplierController.getAllSuppliers,
+  )
+  .post(
+    verifyToken,
+    allowedTo(userRoles.ADMIN),
+    addSupplierValidation,
+    supplierController.addSupplier,
+  );
+
 router
   .route("/:supplierId")
-  .get(supplierController.getSupplierById)
-  .patch(supplierController.updateSupplier)
+  .get(
+    verifyToken,
+    allowedTo(userRoles.ADMIN, userRoles.USER),
+    supplierController.getSupplierById,
+  )
+  .patch(
+    verifyToken,
+    allowedTo(userRoles.ADMIN),
+    supplierController.updateSupplier,
+  )
   .delete(
     verifyToken,
     allowedTo(userRoles.ADMIN),

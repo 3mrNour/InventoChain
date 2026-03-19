@@ -6,18 +6,38 @@ const {
   updateProductValidation,
 } = require("../middlewares/product.validation");
 const { body } = require("express-validator");
+const verifyToken = require("../middlewares/verifyToken");
+const allowedTo = require("../middlewares/allowedTo");
 
 router
   .route("/")
   .get(productController.getAllProducts)
-  .post(addProductValidation, productController.addProduct);
+  .post(
+    verifyToken,
+    allowedTo(userRoles.ADMIN, userRoles.SUPPLIER),
+    addProductValidation,
+    productController.addProduct,
+  );
 
 router
   .route("/:productId")
   .get(productController.getProductById)
-  .patch(updateProductValidation, productController.updateProduct)
-  .delete(productController.deleteProduct);
+  .patch(
+    verifyToken,
+    allowedTo(userRoles.ADMIN, userRoles.SUPPLIER),
+    updateProductValidation,
+    productController.updateProduct,
+  )
+  .delete(
+    verifyToken,
+    allowedTo(userRoles.ADMIN, userRoles.SUPPLIER),
+    productController.deleteProduct,
+  );
 
-router.get("/supplier/:supplierId", productController.getProductsBySupplier);
+router.get(
+  "/supplier/:supplierId",
+  verifyToken,
+  productController.getProductsBySupplier,
+);
 
 module.exports = router;
