@@ -1,4 +1,5 @@
 const Product = require("../models/product.model");
+const Supplier = require("../models/suppplier.model");
 const { validationResult } = require("express-validator");
 const HttpResponseText = require("../utils/HttpResponseText");
 
@@ -36,6 +37,13 @@ const addProduct = async (req, res) => {
   }
 
   try {
+    const foundSupplier = await Supplier.exists({ _id: req.body.supplierId });
+    if (!foundSupplier) {
+      return res.status(400).json({
+        status: HttpResponseText.FAIL,
+        data: { message: "There is no supplier with this ID" },
+      });
+    }
     const newProduct = new Product(req.body);
     await newProduct.save();
     res.status(201).json({
@@ -131,7 +139,7 @@ const deleteProduct = async (req, res) => {
 const getProductsBySupplier = async (req, res) => {
   try {
     const { supplierId } = req.params;
-    const products = await Product.find({ supplierId });
+    const products = await Product.find({ supplierId }).populate('supplierId','name email');
     if (!products) {
       return res.status(404).json({
         status: HttpResponseText.FAIL,

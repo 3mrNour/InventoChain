@@ -1,10 +1,12 @@
 const Supplier = require("../models/suppplier.model");
+const Product = require("../models/product.model");
 const HttpResponseText = require("../utils/HttpResponseText");
 const { validationResult } = require("express-validator");
+const { $where } = require("../models/user.model");
 
 const getAllSuppliers = async (req, res) => {
   try {
-    const allSuppliers = await Supplier.find({},{ _v: false });
+    const allSuppliers = await Supplier.find({}, { __v: false });
     res.status(200).json({
       status: HttpResponseText.SUCCESS,
       data: { suppliers: allSuppliers },
@@ -45,14 +47,14 @@ const addSupplier = async (req, res) => {
 
 const getSupplierById = async (req, res) => {
   try {
-    const supplier = await Supplier.findById(req.params.supplierId,{ _v: false });
+    const supplier = await Supplier.findById(req.params.supplierId, {
+      __v: false,
+    });
     if (!supplier) {
-      return res
-        .status(404)
-        .json({
-          status: HttpResponseText.FAIL,
-          data: { message: "Supplier Not Found!" },
-        });
+      return res.status(404).json({
+        status: HttpResponseText.FAIL,
+        data: { message: "Supplier Not Found!" },
+      });
     }
     res
       .status(200)
@@ -74,15 +76,13 @@ const updateSupplier = async (req, res) => {
       {
         $set: { ...req.body },
       },
-      { new: true, runValidators: true },
+      { returnDocument: "after", runValidators: true },
     );
     if (!updatedSupplier) {
-      return res
-        .status(404)
-        .json({
-          status: HttpResponseText.FAIL,
-          data: { message: "Supplier Not Found!" },
-        });
+      return res.status(404).json({
+        status: HttpResponseText.FAIL,
+        data: { message: "Supplier Not Found!" },
+      });
     }
     return res.status(200).json({
       status: HttpResponseText.SUCCESS,
@@ -99,10 +99,19 @@ const deleteSupplier = async (req, res) => {
     const supplierId = req.params.supplierId;
     const deletedSupplier = await Supplier.findByIdAndDelete(supplierId);
     if (!deletedSupplier) {
-      return res
-        .status(404)
-        .json({ status: HttpResponseText.FAIL, data: {message:"Supplier Not Found!"} });
+      return res.status(404).json({
+        status: HttpResponseText.FAIL,
+        data: { message: "Supplier Not Found!" },
+      });
     }
+
+    // Delete Products of Deleted Supplier
+    //====================================
+    // const deletedProducts = await Product.deleteMany({
+    //   supplierId: supplierId,
+    // });
+    // supplierProducts: deletedProducts
+
     return res.status(200).json({
       status: HttpResponseText.SUCCESS,
       data: { supplier: deletedSupplier },

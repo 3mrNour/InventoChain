@@ -26,7 +26,11 @@ const login = async (req, res) => {
         data: { message: "Invalid email or Password" },
       });
     }
-    const token = await generatedJWT({ email: user.email, id: user._id });
+    const token = await generatedJWT({
+      email: user.email,
+      id: user._id,
+      role: user.role,
+    });
 
     res.status(200).json({
       status: HttpResponseText.SUCCESS,
@@ -44,7 +48,7 @@ const login = async (req, res) => {
 const register = async (req, res) => {
   try {
     const errors = validationResult(req);
-    const { firstName, lastName, email, password } = req.body;
+    const { firstName, lastName, email, password, role } = req.body;
     if (!errors.isEmpty()) {
       return res.status(400).json({
         status: HttpResponseText.FAIL,
@@ -64,11 +68,13 @@ const register = async (req, res) => {
       lastName,
       email,
       password: hashedPassword,
+      role,
     });
 
     newUser.token = await generatedJWT({
       email: newUser.email,
       id: newUser._id,
+      role: newUser.role,
     });
     await newUser.save();
     res
