@@ -87,7 +87,7 @@ const PlaceOrder = async (req, res) => {
     await newOrder.save();
 
     const newTracking = new OrderTracking({
-      orderId: newOrder._id,
+      order: newOrder._id,
       status: orderStatus.PENDING,
       statusHistory: [
         {

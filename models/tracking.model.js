@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const orderStatus = require("../utils/orderStatus");
 
 const orderTrackingSchema = new mongoose.Schema({
-  orderId: {
+  order: {
     type: mongoose.Types.ObjectId,
     ref: "Order",
     required: true,

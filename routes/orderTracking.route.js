@@ -5,6 +5,17 @@ const allowedTo = require("../middlewares/allowedTo");
 const router = express.Router();
 const userRoles = require("../utils/userRoles");
 
-router.route("/").get(verifyToken, allowedTo(userRoles.ADMIN));
+router
+  .route("/:orderId")
+  .get(
+    verifyToken,
+    allowedTo(userRoles.ADMIN, userRoles.SUPPLIER),
+    orderTrackingController.getOrderStatus,
+  )
+  .post(
+    verifyToken,
+    allowedTo(userRoles.ADMIN, userRoles.SUPPLIER),
+    orderTrackingController.updateStatus,
+  );
 
-module.exports=router
+module.exports = router;

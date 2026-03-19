@@ -1,5 +1,5 @@
-# Supply Chain Management API
-
+# Invento Chain
+### Supply Chain Management API
 <p align="center">
   <img src="https://img.shields.io/badge/Node.js-v18+-339933?style=for-the-badge&logo=node.js&logoColor=white" alt="Node.js"/>
   <img src="https://img.shields.io/badge/Express-v5.2-000000?style=for-the-badge&logo=express&logoColor=white" alt="Express"/>
@@ -162,8 +162,8 @@ FinalProject/
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/your-username/supply-chain-api.git
-   cd supply-chain-api
+   git clone https://github.com/3mrNour/InventoChain
+   cd InventoChain
    ```
 
 2. **Install dependencies**
