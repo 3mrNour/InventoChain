@@ -7,7 +7,11 @@ const placeOrderValidation = [
     .isMongoId()
     .withMessage("Invalid objectID"),
 
-  body("items").isLength({ min: 1 }),
+  body("items")
+    .isArray()
+    .withMessage("Items must be provided in array form!")
+    .isLength({ min: 1 })
+    .withMessage("Order placed with at least 1 items!"),
 
   body("items.*.productId")
     .notEmpty()
