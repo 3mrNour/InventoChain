@@ -31,5 +31,32 @@ const authValidation = [
     .isIn(["USER", "SUPPLIER", "ADMIN"])
     .withMessage("Invalid user role"),
 ];
+const updateUser = [
+  body("firstName")
+    .optional()
+    .isString()
+    .withMessage("First name must be a string")
+    .trim(),
 
-module.exports = authValidation;
+  body("lastName")
+    .optional()
+    .isString()
+    .withMessage("Last name must be a string")
+    .trim(),
+
+  body("email")
+    .optional()
+    .isEmail()
+    .withMessage("Please provide a valid email address")
+    .normalizeEmail(),
+
+  body("password")
+    .optional()
+    .isLength({ min: 8 })
+    .withMessage("Password must be at least 8 characters long"),
+  body("role")
+    .optional()
+    .isIn(["USER", "SUPPLIER", "ADMIN"])
+    .withMessage("Invalid user role"),
+];
+module.exports = { authValidation, updateUser };

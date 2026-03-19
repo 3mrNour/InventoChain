@@ -39,3 +39,6 @@ const PlaceOrder = async (req, res) => {
 };
 
 module.exports = { getOrders, getOrderById , PlaceOrder };
+
+
+//اللي فاضل في المشروع (Place Order and API , Inventory Updates & shipment tracking , تقفيل الراوتس مع الرولز)
