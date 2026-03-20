@@ -1,5 +1,6 @@
 const express = require("express");
 const productController = require("../controllers/product.controller");
+const userRoles = require('../utils/userRoles')
 const router = express.Router();
 const {
   addProductValidation,

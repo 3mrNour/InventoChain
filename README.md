@@ -1,4 +1,4 @@
-#Invento Chain (Supply Chain Management API)
+# Invento Chain (Supply Chain Management System)
 
 <p align="center">
   <img src="https://img.shields.io/badge/Node.js-v18+-339933?style=for-the-badge&logo=node.js&logoColor=white" alt="Node.js"/>
@@ -108,6 +108,10 @@ FinalProject/
 ├── package.json                # Dependencies & scripts
 ├── .env                        # Environment configuration (gitignored)
 ├── .env.example                # Environment template
+│
+├── postman/
+│   ├── InventoChain.postman_collection.json
+│   └── Dev.postman_environment.json
 │
 ├── controllers/                # Business logic layer
 │   ├── auth.controller.js      # Login & registration handlers
@@ -221,6 +225,12 @@ MONGO_URL=mongodb://localhost:27017/supply_chain_db
 PORT=2000
 JWT_SECRET_KEY=your-256-bit-secret-key-here
 ```
+
+### Postman Collection
+For easy testing, a Postman Collection and Environment are provided in the `/postman` folder:
+1. Import `InventoChain.postman_collection.json` into Postman.
+2. Import `Dev.postman_environment.json`.
+3. Start the server and enjoy testing the endpoints!
 
 ---
 
