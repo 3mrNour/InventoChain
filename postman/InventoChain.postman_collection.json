@@ -16,7 +16,13 @@
           },
           "request": {
             "method": "GET",
-            "header": [],
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{JWT}}",
+                "type": "text"
+              }
+            ],
             "body": {
               "mode": "raw",
               "raw": "",
@@ -43,7 +49,13 @@
           "name": "Get Supplier By ID",
           "request": {
             "method": "GET",
-            "header": [],
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{JWT}}",
+                "type": "text"
+              }
+            ],
             "url": {
               "raw": "{{BASE_URL}}/api/suppliers/69b85de9742b6bedcaf3c930",
               "host": [
@@ -62,7 +74,13 @@
           "name": "Add Supplier",
           "request": {
             "method": "POST",
-            "header": [],
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{JWT}}",
+                "type": "text"
+              }
+            ],
             "body": {
               "mode": "raw",
               "raw": "{\r\n    \"name\":\"ON Time Sports\",\r\n    \"phone\":\"01234437893\",\r\n    \"email\":\"company@example.com\",\r\n    \"address\":\"القاهرة, مصر\"\r\n}",
@@ -89,7 +107,13 @@
           "name": "Update Supplier",
           "request": {
             "method": "PATCH",
-            "header": [],
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{JWT}}",
+                "type": "text"
+              }
+            ],
             "body": {
               "mode": "raw",
               "raw": "{\r\n    \"name\":\"اتحاد شركات النادي الاهلي\"\r\n\r\n}",
@@ -156,7 +180,13 @@
           "name": "Get All Products",
           "request": {
             "method": "GET",
-            "header": [],
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{JWT}}",
+                "type": "text"
+              }
+            ],
             "url": {
               "raw": "{{BASE_URL}}/api/products?limit=4&page=1",
               "host": [
@@ -184,9 +214,15 @@
           "name": "Get Product By ID",
           "request": {
             "method": "GET",
-            "header": [],
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{JWT}}",
+                "type": "text"
+              }
+            ],
             "url": {
-              "raw": "{{BASE_URL}}/api/products/69b8687056b82a417165e84d",
+              "raw": "{{BASE_URL}}/api/products/69b8687056b82a417165e84d?",
               "host": [
                 "{{BASE_URL}}"
               ],
@@ -194,6 +230,13 @@
                 "api",
                 "products",
                 "69b8687056b82a417165e84d"
+              ],
+              "query": [
+                {
+                  "key": "",
+                  "value": null,
+                  "type": "text"
+                }
               ]
             }
           },
@@ -203,7 +246,13 @@
           "name": "Get Products By Supplier",
           "request": {
             "method": "GET",
-            "header": [],
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{JWT}}",
+                "type": "text"
+              }
+            ],
             "url": {
               "raw": "{{BASE_URL}}/api/products/supplier/69bb39fa145f6cad5ac97794",
               "host": [
@@ -223,7 +272,13 @@
           "name": "Add Product",
           "request": {
             "method": "POST",
-            "header": [],
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{JWT}}",
+                "type": "text"
+              }
+            ],
             "body": {
               "mode": "raw",
               "raw": "{\r\n    \"name\":\"Children room\",\r\n    \"description\":\"room for all childs\",\r\n    \"price\":450,\r\n    \"quantity\":100,\r\n    \"unit\":\"piece\",\r\n    \"category\":\"example_category\",\r\n    \"supplierId\":\"69bb39fa145f6cad5ac97794\"\r\n\r\n}",
@@ -250,7 +305,13 @@
           "name": "Delete Product",
           "request": {
             "method": "DELETE",
-            "header": [],
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{JWT}}",
+                "type": "text"
+              }
+            ],
             "body": {
               "mode": "raw",
               "raw": "{\r\n    \"name\":\"Stanless Steel\",\r\n    \"description\":\"High quality stainless steel product\",\r\n    \"price\":500,\r\n    \"quantity\":100,\r\n    \"unit\":\"kg\",\r\n    \"category\":\"example_category\",\r\n    \"supplierId\":\"69b7db56fdc6dc5634f5bf2d\"\r\n\r\n}"
@@ -273,7 +334,13 @@
           "name": "Update Product",
           "request": {
             "method": "PATCH",
-            "header": [],
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{JWT}}",
+                "type": "text"
+              }
+            ],
             "body": {
               "mode": "raw",
               "raw": "{\r\n    \"name\":\"MEBAMBAAAA\"\r\n}",
@@ -340,8 +407,34 @@
             {
               "name": "Update Order Status",
               "request": {
-                "method": "GET",
-                "header": []
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{JWT}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"status\":\"SHIPPED\",\r\n    \"message\":\"تم شحن الشحنة \"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{BASE_URL}}/api/orderTracker/69bc7801b77c504b96c1da39",
+                  "host": [
+                    "{{BASE_URL}}"
+                  ],
+                  "path": [
+                    "api",
+                    "orderTracker",
+                    "69bc7801b77c504b96c1da39"
+                  ]
+                }
               },
               "response": []
             }
@@ -384,7 +477,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"items\":[{\"productId\":\"69b7e8a978c3b1c356d2c66e\",\"quantity\":4},{\"productId\":\"69b8684b2af38aaafe9e4392\",\"quantity\":20}]\r\n}",
+              "raw": "{\r\n    \"items\":[{\"productId\":\"69b8684b2af38aaafe9e4392\",\"quantity\":80},{\"productId\":\"69b7e8a978c3b1c356d2c66e\",\"quantity\":20}]\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -408,7 +501,13 @@
           "name": "Get Order By ID",
           "request": {
             "method": "GET",
-            "header": [],
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{JWT}}",
+                "type": "text"
+              }
+            ],
             "url": {
               "raw": "{{BASE_URL}}/api/orders/69b8abcdacbba848a72f0219",
               "host": [
@@ -432,7 +531,13 @@
           "name": "Get All Users",
           "request": {
             "method": "GET",
-            "header": [],
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{JWT}}",
+                "type": "text"
+              }
+            ],
             "url": {
               "raw": "{{BASE_URL}}/api/users",
               "host": [

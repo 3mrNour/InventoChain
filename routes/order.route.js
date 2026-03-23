@@ -11,6 +11,6 @@ router
   .route("/")
   .get(verifyToken,orderController.getOrders)
   .post(verifyToken,allowedTo(userRoles.ADMIN,userRoles.USER),placeOrderValidation, orderController.PlaceOrder);
-router.route("/:orderId").get(orderController.getOrderById);
+router.route("/:orderId").get(verifyToken,allowedTo(userRoles.ADMIN,userRoles.SUPPLIER),orderController.getOrderById);
 
 module.exports = router;
