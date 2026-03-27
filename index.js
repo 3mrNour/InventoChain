@@ -15,11 +15,11 @@ app.use(cors());
 const mongoose = require("mongoose");
 const url = process.env.MONGO_URL;
 
+app.use("/api/auth", authRouter);
 app.use("/api/suppliers", supplierRouter);
 app.use("/api/products", productRouter);
 app.use("/api/orders", orderRouter);
 app.use("/api/users", userRouter);
-app.use("/api/auth", authRouter);
 app.use("/api/orderTracker", orderTrackingRouter);
 
 //Global middleware for not found pages
